@@ -7,6 +7,11 @@ public class Serie extends Titulo {
     private boolean ativa;
     private int minutosPorEpisodio;
 
+    public Serie(String nome, int anoDeLancamento) {
+        super(nome, anoDeLancamento);
+    }
+
+
     public int getTotalEpisodios() {
         return totalEpisodios;
     }
@@ -65,4 +70,8 @@ public class Serie extends Titulo {
         System.out.println("Duração em Minutos por Temporada: " + duracaoEmMinutosPorTemporada());
     }
 
+    @Override
+    public String toString() {
+        return getNome()+ "(" + getAnoDeLancamento() + ")" + " - Temporadas " + "(" + getTemporadas() + ")";
+    }
 }
