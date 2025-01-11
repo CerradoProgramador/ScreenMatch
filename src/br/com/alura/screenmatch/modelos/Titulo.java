@@ -1,6 +1,8 @@
 package br.com.alura.screenmatch.modelos;
 
 
+import br.com.alura.screenmatch.Excessao.ErroDeConversaoDeAnoException;
+
 
 public class Titulo implements Comparable<Titulo> {
     private String nome;
@@ -13,6 +15,15 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(String nome, int anoDeLancamento) {
         this.nome = nome;
         this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOMDB meuTituloOMBDB) throws ErroDeConversaoDeAnoException {
+        this.nome = meuTituloOMBDB.title();
+        if (meuTituloOMBDB.year().length() > 4) {
+            throw new ErroDeConversaoDeAnoException("Não conseguiu converter o ano");
+        }
+        this.anoDeLancamento = Integer.valueOf(meuTituloOMBDB.year());
+        this.duracaoEmMinutos = Integer.valueOf(meuTituloOMBDB.runtime().substring(0,2));
     }
 
     public String getNome() {
@@ -68,5 +79,12 @@ public class Titulo implements Comparable<Titulo> {
     @Override
     public int compareTo(Titulo outroTitulo) {
         return this.getNome().compareTo(outroTitulo.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return "(" + "Titulo: "+ getNome() +
+                " - Ano de Lançamento: " + getAnoDeLancamento()
+                + " - Duração em Minutos: " + getDuracaoEmMinutos() + ") PRÓXIMO" ;
     }
 }
